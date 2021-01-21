@@ -1,7 +1,10 @@
-import { interval, of, NEVER, EMPTY, throwError, from, Subject, BehaviorSubject, fromEvent, timer } from "rxjs";
-import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, take, takeLast, takeUntil, takeWhile, tap, zip, zipAll } from "rxjs/operators";
+import { interval, of, NEVER, EMPTY, throwError, from, Subject, BehaviorSubject, fromEvent, timer, observable, Observable } from "rxjs";
+import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zip, zipAll } from "rxjs/operators";
 import { ajax } from 'rxjs/ajax'
 import { pipeFromArray } from "rxjs/internal/util/pipe";
+import { createModifiersFromModifierFlags } from "typescript";
+import { networkInterfaces } from "os";
+import { act } from "react-dom/test-utils";
 
 const OneToTenArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 const displayObserver = {
@@ -141,15 +144,59 @@ export const pairwiseOperator = () => {
 }
 
 export const mapConcatMapSwitchMapOperator = () => {
+    //print value each x seconds
+    // from(OneToTenArray).pipe(
+    //     concatMap(v => of(v).pipe(delay(1000))),
+    //     map(el => el + 10),
+    // ).subscribe(displayObserver)
+
+    //inner Observer => use for api calls and stuff like that
+    const innerObs = (data: any) => {
+        return of(data).pipe(
+            delay(1000)
+        )
+    }
+
+    //Ein einfaches map erfordert zwei subscriber da der innerobs ein observable zurücksendet
     from(OneToTenArray).pipe(
-        concatMap(v => of(v).pipe(delay(1000))),
-        map(el => el + 10),
+        map(element => innerObs(element))
+    ).subscribe((outerObsVal) => outerObsVal.subscribe((innerObsVal) => console.log(innerObsVal)))
+
+    //Erspart ein zweites Subscribe und merged alle observer zusammen
+    from(OneToTenArray).pipe(
+        map(element => innerObs(element)),
+        mergeAll()
     ).subscribe(displayObserver)
 
+    //mergemap erspart das map und merge all und führt alle inner observer aus
+    from(OneToTenArray).pipe(
+        mergeMap(element => innerObs(element))
+    ).subscribe(displayObserver)
 
-    // from(OneToTenArray)
-    //     .pipe(
-    //         mergeMap()
-    //     )
-    //     .subscribe()
+    //gibt nur den letzten observer zurück und cancelt alle anderen
+    from(OneToTenArray).pipe(
+        map(element => innerObs(element)),
+        switchAll()
+    ).subscribe(displayObserver)
+
+    from(OneToTenArray).pipe(
+        switchMap(element => innerObs(element))
+    ).subscribe(displayObserver)
+}
+
+
+const activeFilter = new BehaviorSubject("none")
+
+export const filterExmapleOfSwitchMap = (filter: string) => {
+    activeFilter.next(filter)
+
+    const getData = (data: any) => {
+        return of(data).pipe(
+            delay(3000)
+        )
+    }
+
+    activeFilter.pipe(
+        switchMap((element: any) => getData(element))
+    ).subscribe(displayObserver)
 }

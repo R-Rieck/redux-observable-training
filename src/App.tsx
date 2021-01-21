@@ -16,26 +16,38 @@ import {
   takeOperators,
   scanAndReduceOperator,
   pairwiseOperator,
-  mapConcatMapSwitchMapOperator
+  mapConcatMapSwitchMapOperator,
+  filterExmapleOfSwitchMap,
 } from "./rxjs/index";
 import { fromEvent } from "rxjs";
 
 function App() {
   const btn = useRef<any>(null);
+  const btnFire = useRef<any>(null);
   const test: any = document.getElementById("root");
+  const [el, setEl] = useState<string>("");
 
-  useEffect(() => {
-    btn?.current?.addEventListener("click", () => mapConcatMapSwitchMapOperator());
-    // fromEvent(btn?.current, 'click').subscribe(e => console.log(e))
-    // fromEvent(test, 'mousemove').subscribe((e:any) => console.log(e.offsetX))
-  }, []);
+  // useEffect(() => {
+  //   btnFire?.current?.addEventListener("click", () => fireFilter());
+  // }, []);
 
   return (
     <div className="App">
       <h1 className="fancy-title">RxJS 6 - Time to test</h1>
-      <button className="fancy-button" ref={btn}>
-        click me to see fancy stuff in the developer console
+      <button
+        className="fancy-button"
+        ref={btn}
+        onClick={() => filterExmapleOfSwitchMap(el)}
+      >
+        {/* click me to see fancy stuff in the developer console */}
+        add filter to queue
       </button>
+      <input
+        type="text"
+        name=""
+        id=""
+        onChange={(el) => setEl(el.target.value)}
+      />
     </div>
   );
 }
