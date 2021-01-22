@@ -219,7 +219,7 @@ export const startWithOperator = () => {
 const filterByOdd = () => filter((num: number) => num % 2 === 0)
 
 export const customOperator = () => {
-    from(OneToTenArray).pipe(
+    return from(OneToTenArray).pipe(
         filterByOdd()
-    ).subscribe(displayObserver)
+    )
 }
