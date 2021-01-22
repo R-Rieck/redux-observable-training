@@ -216,7 +216,7 @@ export const startWithOperator = () => {
     ).subscribe(displayObserver)
 }
 
-const filterByOdd = () => filter((num: number) => num % 2 === 0)
+export const filterByOdd = () => filter((num: number) => num % 2 === 0)
 
 export const customOperator = () => {
     return from(OneToTenArray).pipe(
