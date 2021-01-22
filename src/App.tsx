@@ -19,7 +19,8 @@ import {
   mapConcatMapSwitchMapOperator,
   filterExmapleOfSwitchMap,
   startWithOperator,
-  customOperator
+  customOperator,
+  errorHandling
 } from "./rxjs/index";
 import { fromEvent } from "rxjs";
 
@@ -35,7 +36,7 @@ function App() {
       <button
         className="fancy-button"
         ref={btn}
-        onClick={() => customOperator()}
+        onClick={() => errorHandling()}
       >
         {/* click me to see fancy stuff in the developer console */}
         add filter to queue

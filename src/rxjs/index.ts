@@ -1,4 +1,4 @@
-import { interval, of, NEVER, EMPTY, throwError, from, Subject, BehaviorSubject, fromEvent, timer, observable, Observable } from "rxjs";
+import { interval, of, NEVER, EMPTY, throwError, from, Subject, BehaviorSubject, fromEvent, timer, observable, Observable, range } from "rxjs";
 import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zipAll, startWith } from "rxjs/operators";
 import { ajax } from 'rxjs/ajax'
 import { pipeFromArray } from "rxjs/internal/util/pipe";
@@ -221,5 +221,14 @@ export const filterByOdd = () => filter((num: number) => num % 2 === 0)
 export const customOperator = () => {
     return from(OneToTenArray).pipe(
         filterByOdd()
-    )
+    ).subscribe(displayObserver)
+}
+
+export const errorHandling = () => {
+    of(1).pipe(
+        mergeMap(val => throwError(new Error("Something went wrong" + val)).pipe(
+            catchError((err: Error) => of(err.message))
+        )),
+        tap(console.log)
+    ).subscribe(displayObserver)
 }
