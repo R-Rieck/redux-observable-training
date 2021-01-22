@@ -1,5 +1,5 @@
 import { interval, of, NEVER, EMPTY, throwError, from, Subject, BehaviorSubject, fromEvent, timer, observable, Observable } from "rxjs";
-import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zip, zipAll } from "rxjs/operators";
+import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zipAll, startWith } from "rxjs/operators";
 import { ajax } from 'rxjs/ajax'
 import { pipeFromArray } from "rxjs/internal/util/pipe";
 import { createModifiersFromModifierFlags } from "typescript";
@@ -166,28 +166,28 @@ export const mapConcatMapSwitchMapOperator = () => {
     from(OneToTenArray).pipe(
         map(element => innerObs(element)),
         mergeAll()
-        ).subscribe((val) => console.log('mergeAll:',val))
+    ).subscribe((val) => console.log('mergeAll:', val))
 
     //mergemap erspart das map und merge all und führt alle inner observer aus
     from(OneToTenArray).pipe(
         mergeMap(element => innerObs(element))
-        ).subscribe((val) => console.log('mergeMap:',val))
+    ).subscribe((val) => console.log('mergeMap:', val))
 
     //gibt nur den letzten observer zurück und cancelt alle anderen
     from(OneToTenArray).pipe(
         map(element => innerObs(element)),
         switchAll()
-        ).subscribe((val) => console.log('switchAll:',val))
+    ).subscribe((val) => console.log('switchAll:', val))
 
     //switchMap cancelt alle anderen InnerObs und executed nur den letzten
     from(OneToTenArray).pipe(
         switchMap(element => innerObs(element))
-        ).subscribe((val) => console.log('switchmap:',val))
+    ).subscribe((val) => console.log('switchmap:', val))
 
     //concatMap wartet auf den vorherigen innerObs bevor er weiter macht
     from(OneToTenArray).pipe(
         concatMap(elemet => innerObs(elemet))
-    ).subscribe((val) => console.log('concat:',val))
+    ).subscribe((val) => console.log('concat:', val))
 }
 
 
@@ -204,5 +204,14 @@ export const filterExmapleOfSwitchMap = (filter: string) => {
 
     activeFilter.pipe(
         switchMap((element: any) => getData(element))
+    ).subscribe(displayObserver)
+}
+
+export const startWithOperator = () => {
+    from(OneToTenArray).pipe(
+        concatMap(val => interval(2000).pipe(
+            startWith("Starting"),
+            map(el => el)
+        ))
     ).subscribe(displayObserver)
 }
