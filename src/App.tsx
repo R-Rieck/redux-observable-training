@@ -18,7 +18,8 @@ import {
   pairwiseOperator,
   mapConcatMapSwitchMapOperator,
   filterExmapleOfSwitchMap,
-  startWithOperator
+  startWithOperator,
+  customOperator
 } from "./rxjs/index";
 import { fromEvent } from "rxjs";
 
@@ -28,17 +29,13 @@ function App() {
   const test: any = document.getElementById("root");
   const [el, setEl] = useState<string>("");
 
-  // useEffect(() => {
-  //   btnFire?.current?.addEventListener("click", () => fireFilter());
-  // }, []);
-
   return (
     <div className="App">
       <h1 className="fancy-title">RxJS 6 - Time to test</h1>
       <button
         className="fancy-button"
         ref={btn}
-        onClick={() => startWithOperator()}
+        onClick={() => customOperator()}
       >
         {/* click me to see fancy stuff in the developer console */}
         add filter to queue
