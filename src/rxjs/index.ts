@@ -166,22 +166,28 @@ export const mapConcatMapSwitchMapOperator = () => {
     from(OneToTenArray).pipe(
         map(element => innerObs(element)),
         mergeAll()
-    ).subscribe(displayObserver)
+        ).subscribe((val) => console.log('mergeAll:',val))
 
     //mergemap erspart das map und merge all und führt alle inner observer aus
     from(OneToTenArray).pipe(
         mergeMap(element => innerObs(element))
-    ).subscribe(displayObserver)
+        ).subscribe((val) => console.log('mergeMap:',val))
 
     //gibt nur den letzten observer zurück und cancelt alle anderen
     from(OneToTenArray).pipe(
         map(element => innerObs(element)),
         switchAll()
-    ).subscribe(displayObserver)
+        ).subscribe((val) => console.log('switchAll:',val))
 
+    //switchMap cancelt alle anderen InnerObs und executed nur den letzten
     from(OneToTenArray).pipe(
         switchMap(element => innerObs(element))
-    ).subscribe(displayObserver)
+        ).subscribe((val) => console.log('switchmap:',val))
+
+    //concatMap wartet auf den vorherigen innerObs bevor er weiter macht
+    from(OneToTenArray).pipe(
+        concatMap(elemet => innerObs(elemet))
+    ).subscribe((val) => console.log('concat:',val))
 }
 
 

@@ -37,7 +37,7 @@ function App() {
       <button
         className="fancy-button"
         ref={btn}
-        onClick={() => filterExmapleOfSwitchMap(el)}
+        onClick={() => mapConcatMapSwitchMapOperator()}
       >
         {/* click me to see fancy stuff in the developer console */}
         add filter to queue
