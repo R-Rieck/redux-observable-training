@@ -1,5 +1,5 @@
 import { interval, of, NEVER, EMPTY, throwError, from, Subject, BehaviorSubject, fromEvent, timer, observable, Observable, range } from "rxjs";
-import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zipAll, startWith } from "rxjs/operators";
+import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zipAll, startWith, retry, retryWhen } from "rxjs/operators";
 import { ajax } from 'rxjs/ajax'
 import { pipeFromArray } from "rxjs/internal/util/pipe";
 import { createModifiersFromModifierFlags } from "typescript";
@@ -230,5 +230,19 @@ export const errorHandling = () => {
             catchError((err: Error) => of(err.message))
         )),
         tap(console.log)
+    ).subscribe(displayObserver)
+}
+
+export const RequestWithRetryAndRetryWhen = () => {
+    of(1).pipe(
+        concatMap(() => ajax.getJSON("sshttps://api.chucknorris.io/jokes/random").pipe(
+            retry(2)
+        ))
+    ).subscribe(displayObserver)
+
+    of(1).pipe(
+        concatMap(() => ajax.getJSON("sshttps://api.chucknorris.io/jokes/random").pipe(
+            retryWhen((x: any) => interval(2000).pipe(tap(console.log), take(2)))
+        ))
     ).subscribe(displayObserver)
 }

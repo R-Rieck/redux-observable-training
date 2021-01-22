@@ -20,7 +20,8 @@ import {
   filterExmapleOfSwitchMap,
   startWithOperator,
   customOperator,
-  errorHandling
+  errorHandling,
+  RequestWithRetryAndRetryWhen
 } from "./rxjs/index";
 import { fromEvent } from "rxjs";
 
@@ -36,7 +37,7 @@ function App() {
       <button
         className="fancy-button"
         ref={btn}
-        onClick={() => errorHandling()}
+        onClick={() => RequestWithRetryAndRetryWhen()}
       >
         {/* click me to see fancy stuff in the developer console */}
         add filter to queue
