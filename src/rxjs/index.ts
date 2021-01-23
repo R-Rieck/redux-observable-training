@@ -243,11 +243,16 @@ export const RequestWithRetryAndRetryWhen = () => {
     ).subscribe(displayObserver)
 }
 
-export const incrementalSearch = (val: HTMLInputElement ) => {
+export const incrementalSearch = (val: HTMLInputElement) => {
     return fromEvent(val, "input").pipe(
+        map((element: any) => element.target.value),
         debounceTime(1000),
-        distinctUntilChanged((val: any) => val.target.value),
-        concatMap((element: any) => ajax.getJSON("https://api.github.com/search/users?q=" + element.target.value)),
+        distinctUntilChanged(),
+        filter(el => !!el),
+        switchMap((user: any) => ajax.getJSON("https://api.github.com/search/users?q=" + user).pipe(
+            tap(console.log),
+            catchError(err => EMPTY)
+        )),
         map((element: any) => element)
     )
 }
