@@ -24,24 +24,15 @@ import {
   RequestWithRetryAndRetryWhen,
   incrementalSearch,
 } from "./rxjs/index";
-import { fromEvent } from "rxjs";
-import { debounceTime } from "rxjs/operators";
-import {
-  EventTargetLike,
-  FromEventTarget,
-} from "rxjs/internal/observable/fromEvent";
-import { profile } from "console";
 import { Profile, ProfileCard } from "./components/card";
 
 function App() {
   const btn = useRef<any>(null);
   const search = useRef<HTMLInputElement | null>(null);
-  const test: any = document.getElementById("root");
   const [profiles , setProfiles] = useState([])
-  const [el, setEl] = useState<string>("");
 
   useEffect(() => {
-    if (search && search.current) incrementalSearch(search?.current).subscribe(elements => setProfiles(elements.items));
+    if (search && search.current) incrementalSearch(search?.current).subscribe((elements:any) => setProfiles(elements.items));
   }, [search]);
 
   return (
@@ -52,8 +43,7 @@ function App() {
         ref={btn}
         // onClick={() => RequestWithRetryAndRetryWhen()}
       >
-        {/* click me to see fancy stuff in the developer console */}
-        add filter to queue
+        click me to see fancy stuff in the developer console
       </button>
       <input
         type="text"

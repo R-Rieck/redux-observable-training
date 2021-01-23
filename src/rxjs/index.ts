@@ -249,10 +249,6 @@ export const incrementalSearch = (val: HTMLInputElement) => {
         debounceTime(1000),
         distinctUntilChanged(),
         filter(el => !!el),
-        switchMap((user: any) => ajax.getJSON("https://api.github.com/search/users?q=" + user).pipe(
-            tap(console.log),
-            catchError(err => EMPTY)
-        )),
-        map((element: any) => element)
+        switchMap((user: any) => ajax.getJSON("https://api.github.com/search/users?q=" + user).pipe(catchError(err => EMPTY))),
     )
 }
