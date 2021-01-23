@@ -1,5 +1,5 @@
 import { interval, of, NEVER, EMPTY, throwError, from, Subject, BehaviorSubject, fromEvent, timer, observable, Observable, range } from "rxjs";
-import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zipAll, startWith, retry, retryWhen, debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zipAll, startWith, retry, retryWhen, debounceTime, distinctUntilChanged, share } from "rxjs/operators";
 import { ajax } from 'rxjs/ajax'
 
 const OneToTenArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -250,5 +250,13 @@ export const incrementalSearch = (val: HTMLInputElement) => {
         distinctUntilChanged(),
         filter(el => !!el),
         switchMap((user: any) => ajax.getJSON("https://api.github.com/search/users?q=" + user).pipe(catchError(err => EMPTY))),
+        tap(console.log)
+        // share()
+    )
+}
+
+export const pollingAjaxRequest = () => {
+    return timer(0, 500).pipe(
+        switchMap(res => ajax.get('https://picsum.photos/200').pipe(catchError(err => EMPTY)))
     )
 }

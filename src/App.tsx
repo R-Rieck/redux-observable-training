@@ -23,14 +23,16 @@ import {
   errorHandling,
   RequestWithRetryAndRetryWhen,
   incrementalSearch,
+  pollingAjaxRequest
 } from "./rxjs/index";
 import { Profile, ProfileCard } from "./components/card";
 
 function App() {
   const btn = useRef<any>(null);
   const search = useRef<HTMLInputElement | null>(null);
-  const [profiles , setProfiles] = useState([])
-
+  const [profiles, setProfiles] = useState([])
+  const [imageUrl, setImageUrl] = useState("")
+  
   useEffect(() => {
     if (search && search.current) incrementalSearch(search?.current).subscribe((elements:any) => setProfiles(elements.items));
   }, [search]);
@@ -38,20 +40,24 @@ function App() {
   return (
     <div className="App">
       <h1 className="fancy-title">RxJS 6 - Time to test</h1>
-      <button
+      {/* <button
         className="fancy-button"
         ref={btn}
-        // onClick={() => RequestWithRetryAndRetryWhen()}
+        onClick={() => pairwiseOperator()}
       >
         click me to see fancy stuff in the developer console
       </button>
+      {imageUrl.length > 0 ?
+        < img src={imageUrl} height="200" width="200"></img> : 
+        null
+      } */}
       <input
         type="text"
         name=""
         ref={search}
         id=""
-        // onChange={(el) => incrementalSearch(el.target.value)}
       />
+      <h2 style={{color: 'white'}}>{ `${profiles.length} results`}</h2>
       {profiles?.map((element: Profile) => (
         <ProfileCard key={ element.html_url}{...element}></ProfileCard>
        ))}
