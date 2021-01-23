@@ -1,0 +1,32 @@
+.profilecard-wrapper {
+    width: 100%;
+    background-color: white;
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+}
+
+.profilecard-image {
+    width: 300px;
+    height: 300px;
+}
+
+.profilecard-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 0.5rem;
+}
+
+.profilecard-name {
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+.profilecard-link {
+    margin-top: 1rem;
+    width: 100%;
+    color: rgb(71, 71, 71);    
+    text-align: start;
+}

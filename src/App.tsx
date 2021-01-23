@@ -21,15 +21,28 @@ import {
   startWithOperator,
   customOperator,
   errorHandling,
-  RequestWithRetryAndRetryWhen
+  RequestWithRetryAndRetryWhen,
+  incrementalSearch,
 } from "./rxjs/index";
 import { fromEvent } from "rxjs";
+import { debounceTime } from "rxjs/operators";
+import {
+  EventTargetLike,
+  FromEventTarget,
+} from "rxjs/internal/observable/fromEvent";
+import { profile } from "console";
+import { Profile, ProfileCard } from "./components/card";
 
 function App() {
   const btn = useRef<any>(null);
-  const btnFire = useRef<any>(null);
+  const search = useRef<HTMLInputElement | null>(null);
   const test: any = document.getElementById("root");
+  const [profiles , setProfiles] = useState([])
   const [el, setEl] = useState<string>("");
+
+  useEffect(() => {
+    if (search && search.current) incrementalSearch(search?.current).subscribe(elements => setProfiles(elements.items));
+  }, [search]);
 
   return (
     <div className="App">
@@ -37,7 +50,7 @@ function App() {
       <button
         className="fancy-button"
         ref={btn}
-        onClick={() => RequestWithRetryAndRetryWhen()}
+        // onClick={() => RequestWithRetryAndRetryWhen()}
       >
         {/* click me to see fancy stuff in the developer console */}
         add filter to queue
@@ -45,9 +58,13 @@ function App() {
       <input
         type="text"
         name=""
+        ref={search}
         id=""
-        onChange={(el) => setEl(el.target.value)}
+        // onChange={(el) => incrementalSearch(el.target.value)}
       />
+      {profiles?.map((element: Profile) => (
+        <ProfileCard key={ element.html_url}{...element}></ProfileCard>
+       ))}
     </div>
   );
 }
