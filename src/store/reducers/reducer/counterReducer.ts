@@ -7,9 +7,12 @@ const initalState: CounterState = {
 }
 
 export const CounterReducer = (state: CounterState = initalState, action: any): CounterState => {
+    console.log(action)
     switch (action.type) {
-        case 'INCREMENT_IF_ODD':
+        case 'INCREMENT_COUNTER':
             return { ...state, counter: state.counter += 2 }
+        case 'INCREMENT_BY':
+            return { ...state, counter: state.counter += action.payload.payload }
         default:
             return state;
     }

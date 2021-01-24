@@ -16,9 +16,7 @@ export const AddUserFullfield = (payload: any) => ({
 export const AddUserEpic = (action$: any) => {
     return action$.pipe(
         ofType("ADD_USER"),
-        tap(console.log),
         switchMap((user: any) => ajax.getJSON("https://api.github.com/search/users?q=" + user.payload).pipe(
-            tap(el => console.log(el)),
             catchError(err => EMPTY),
             map(el => AddUserFullfield(el))
         ))
