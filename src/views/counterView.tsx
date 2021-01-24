@@ -13,14 +13,14 @@ export const CounterView = () => {
         className="counter-view-increment-button"
         onClick={() => dispatch(incrementIfOdd)}
       >
-        Increment
+        +1 (if odd)
       </button>
-      {/* <button
+      <button
         className="counter-view-increment-button"
         onClick={() => dispatch(incrementWithValueX(5))}
       >
-        Increment By 5
-      </button> */}
+        +5
+      </button>
       <div className="counter-view-count">counter: {counter}</div>
     </>
   );
