@@ -1,5 +1,5 @@
-import { interval, of, NEVER, EMPTY, throwError, from, Subject, BehaviorSubject, fromEvent, timer, observable, Observable, range } from "rxjs";
-import { bufferCount, catchError, concatMap, debounce, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, zipAll, startWith, retry, retryWhen, debounceTime, distinctUntilChanged, share } from "rxjs/operators";
+import { interval, of, NEVER, EMPTY, throwError, from, BehaviorSubject, fromEvent, timer } from "rxjs";
+import { catchError, concatMap, delay, filter, map, mergeAll, mergeMap, pairwise, reduce, scan, switchAll, switchMap, take, takeLast, takeUntil, takeWhile, tap, startWith, retry, retryWhen, debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { ajax } from 'rxjs/ajax'
 
 const OneToTenArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
