@@ -1,14 +1,14 @@
 import { composeWithDevTools } from "redux-devtools-extension";
 import { applyMiddleware, createStore } from "redux";
 import { createEpicMiddleware } from "redux-observable";
-import { pingpongReducer } from "./reducer/index";
-import { PingSwitchEpic } from "./epics/index";
+import { GithubProfileReducer } from "./reducer/githubProfileReducer";
+import { AddUserEpic } from "./epics/index";
 
 const middleware = createEpicMiddleware();
 
 export default createStore(
-  pingpongReducer,
+  GithubProfileReducer,
   composeWithDevTools(applyMiddleware(middleware))
 );
 
-middleware.run(PingSwitchEpic);
+middleware.run(AddUserEpic);
