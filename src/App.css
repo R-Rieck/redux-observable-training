@@ -1,33 +1,51 @@
 .App {
   text-align: center;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20rem;
   flex-direction: column;
+  padding: 1rem;
+  min-height: 100vh;
   height: 100%;
-  background: #0B0C10;
+  background: #0b0c10;
+}
+
+.fancy-searchbar {
+  min-width: 170px;
+  width: 30vw;
+  height: 2rem;
+  margin: 1rem;
 }
 
 .fancy-button {
-  height: 10rem;
+  min-width: 170px;
+  height: 5rem;
   width: 30vw;
-  padding:2rem;
-  text-align: middle;
-  background-color: #66FCF1;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #66fcf1;
   color: black;
   font-size: 2rem;
   border: none;
   border-bottom: 6px solid #45a29e;
 }
+
 .fancy-button:active {
   transform: translate(0, 3px);
   border-bottom: 1px solid #45a29e;
 }
 
 .fancy-title {
-  color: #66FCF1;
+  color: #66fcf1;
   text-transform: uppercase;
   font-size: 5rem;
   filter: drop-shadow(0 6px 0.3rem #5f7a9b);
+}
+
+.fancy-itemlist{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
